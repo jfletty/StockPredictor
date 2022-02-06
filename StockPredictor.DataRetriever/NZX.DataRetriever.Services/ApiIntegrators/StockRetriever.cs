@@ -50,7 +50,7 @@ namespace StockPredictor.DataRetriever.Services.ApiIntegrators
 
                 await RefreshGroupedSymbolsAsync(symbolsToRefresh);
 
-                _logger.LogInformation("------------------Batch complete-----------------------");
+                _logger.LogInformation("Batch complete");
             }
         }
 
@@ -65,7 +65,9 @@ namespace StockPredictor.DataRetriever.Services.ApiIntegrators
             var tasks = symbolsToRefresh.Select(async symbol =>
             {
                 var temp = await _restClient.GetAsync<ApiStock>(RemainingUri, symbol, parameters);
-                if (temp.HasError || !string.IsNullOrEmpty(temp.SuccessResult.QuoteSummary.Error?.Description) || temp.SuccessResult.QuoteSummary.Result.First().AssetProfile == null)
+                if (temp.HasError || 
+                    !string.IsNullOrEmpty(temp.SuccessResult.QuoteSummary.Error?.Description) ||
+                    temp.SuccessResult.QuoteSummary.Result.First().AssetProfile == null)
                 {
                     Exception error;
                     if (temp.HasError)

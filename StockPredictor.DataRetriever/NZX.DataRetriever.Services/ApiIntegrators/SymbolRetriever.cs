@@ -20,7 +20,7 @@ namespace StockPredictor.DataRetriever.Services.ApiIntegrators
         private readonly IRefreshesService _refreshesService;
         private readonly ILogger<SymbolRetriever> _logger;
 
-        private const string Uri = "https://finnhub.io/api/v1/stock/symbol?token=c106bfv48v6t383m2k2g";
+        private const string Uri = "https://finnhub.io/api/v1/stock/symbol?token={id}";
 
         public SymbolRetriever(
             SymbolService symbolService,

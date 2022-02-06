@@ -49,19 +49,21 @@ namespace StockPredictor.DataRetriever.Services.ApiIntegrators
                 var symbolsForPricesToRefresh = await _refreshesService.IsRefreshRequiredAsync(JobType.Price);
                 if (!symbolsForPricesToRefresh.Any()) return;
 
-                _logger.LogInformation($"------------------ Beginning to refresh {symbolsForPricesToRefresh.Count} Prices -----------------------");
+                _logger.LogInformation($"Beginning to refresh {symbolsForPricesToRefresh.Count} Prices");
 
                 await RefreshPricesAsync(symbolsForPricesToRefresh);
+                stopwatch.Stop();
 
                 if (stopwatch.Elapsed >= TimeSpan.FromMinutes(6))
-                    _logger.LogErrorMessage($"PriceRetriever taking too long. Total time: {stopwatch.Elapsed.Minutes} minutes," +
+                    _logger.LogErrorMessage($"PriceRetriever taking too long. Total time:" +
+                                            $" {stopwatch.Elapsed.Minutes} minutes," +
                                             $" {stopwatch.Elapsed.Seconds} seconds.");
-                stopwatch.Stop();
-                _logger.LogInformation($"------------------ Batch complete in {stopwatch.Elapsed.Minutes} minutes," +
-                                       $" {stopwatch.Elapsed.Seconds} seconds -----------------------");
+                else
+                    _logger.LogInformation(
+                        $"------------------ Batch complete in {stopwatch.Elapsed.Minutes} minutes," +
+                        $" {stopwatch.Elapsed.Seconds} seconds -----------------------");
             }
         }
-
 
         private async Task RefreshPricesAsync(IReadOnlyCollection<string> symbolsToRefresh)
         {
@@ -71,12 +73,13 @@ namespace StockPredictor.DataRetriever.Services.ApiIntegrators
             await _refreshesService.BeginRefresh(JobType.Price, symbolsToRefresh);
 
             var parameters = new Dictionary<string, string>
-                    {{"includePrePost", "false"}, {"interval", "1m"}, {"useYfid", "true"}, {"range", "2d"}};
+                {{"includePrePost", "false"}, {"interval", "1m"}, {"useYfid", "true"}, {"range", "2d"}};
 
             var tasks = symbolsToRefresh.Select(async symbol =>
             {
                 var temp = await _restClient.GetAsync<ApiStockPrice>(RemainingUri, symbol, parameters);
-                if (temp.HasError || !string.IsNullOrEmpty(temp.SuccessResult?.Chart?.Error?.Description) || temp.SuccessResult?.Chart == null)
+                if (temp.HasError || !string.IsNullOrEmpty(temp.SuccessResult?.Chart?.Error?.Description) ||
+                    temp.SuccessResult?.Chart == null)
                 {
                     Exception error;
                     if (temp.HasError)
@@ -111,15 +114,17 @@ namespace StockPredictor.DataRetriever.Services.ApiIntegrators
             var emptyResponses = successfulResponses.Where(x => x.Value.Count == 0).Select(x => x.Key).ToList();
             if (emptyResponses.Any())
             {
-                await _refreshesService.UpdateRefreshAsync(JobType.Price, successfulResponses.Where(x => x.Value.Count == 0).Select(x => x.Key));
+                await _refreshesService.UpdateRefreshAsync(JobType.Price,
+                    successfulResponses.Where(x => x.Value.Count == 0).Select(x => x.Key));
             }
 
             var convertedStock = await _dataWarehousePipeline.TransformFactAndDimensions(successfulResponses);
 
             if (!convertedStock.Any()) return;
             await _stockPriceService.DeleteAndInsertAsync(convertedStock);
-  
-            var processedExternalKeys = convertedStock.Select(x => x.Key.Substring(0, x.Key.LastIndexOf('.'))).Distinct().ToList();
+
+            var processedExternalKeys = convertedStock.Select(x => x.Key.Substring(0, x.Key.LastIndexOf('.')))
+                .Distinct().ToList();
             await _refreshesService.UpdateRefreshAsync(JobType.Price, processedExternalKeys);
         }
     }

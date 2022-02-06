@@ -19,7 +19,8 @@ namespace StockPredictor.DataRetriever.Services.Services
             _dataContextProvider = new DataContextProvider();
         }
 
-        public async Task<KeyValuePair<List<KeyValuePair<string, Exception>>, List<string>>> DeleteAndInsertAsync(Dictionary<int, List<DailyPriceRecap>> apiPriceRecap)
+        public async Task<KeyValuePair<List<KeyValuePair<string, Exception>>, List<string>>> DeleteAndInsertAsync(
+            Dictionary<int, List<DailyPriceRecap>> apiPriceRecap)
         {
             var grouped = apiPriceRecap.GroupBy(x => x.Key);
             var failedTasks = new ConcurrentBag<KeyValuePair<string, Exception>>();

@@ -28,9 +28,6 @@ namespace StockPredictor.DataRetriever.Services.Infrastructure
             modelBuilder.Entity<StockPrice>()
                 .HasKey(x => new { x.StockKey, x.DateKey, x.TimeOfDayKey });
 
-            modelBuilder.Entity<StockDividend>()
-                .HasKey(x => new { x.StockKey, x.DateKey });
-
             modelBuilder.Entity<Symbol>()
                 .HasKey(x => new { x.SymbolKey, x.ExchangeKey });
 

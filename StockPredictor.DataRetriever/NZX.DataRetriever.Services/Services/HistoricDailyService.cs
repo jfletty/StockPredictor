@@ -18,7 +18,8 @@ namespace StockPredictor.DataRetriever.Services.Services
             _dataContextProvider = new DataContextProvider();
         }
 
-        public async Task<KeyValuePair<List<KeyValuePair<string, Exception>>, List<string>>> DeleteAndInsertAsync(Dictionary<int, List<DailyPriceRecap>> apiPriceRecap)
+        public async Task<KeyValuePair<List<KeyValuePair<string, Exception>>, List<string>>> DeleteAndInsertAsync(
+            Dictionary<int, List<DailyPriceRecap>> apiPriceRecap)
         {
             var grouped = apiPriceRecap.GroupBy(x => x.Key);
             var failedTasks = new ConcurrentBag<KeyValuePair<string, Exception>>();
@@ -49,7 +50,6 @@ namespace StockPredictor.DataRetriever.Services.Services
             });
 
             await Task.WhenAll(tasks);
-            
             return new KeyValuePair<List<KeyValuePair<string, Exception>>, List<string>>(failedTasks.ToList(), passedTasks.ToList());
         }
     }

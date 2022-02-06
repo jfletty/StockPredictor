@@ -50,18 +50,20 @@ namespace StockPredictor.DataRetriever.Services.ApiIntegrators
                 if (!symbolsForPricesToRefresh.Any()) return;
 
                 _logger.LogInformation(
-                    $"-------- Beginning to refresh {symbolsForPricesToRefresh.Count} Historic Daily Prices ----------");
+                    $"Beginning to refresh {symbolsForPricesToRefresh.Count} Historic Daily Prices");
 
                 await RefreshPricesAsync(symbolsForPricesToRefresh);
 
+                stopwatch.Stop();
+
                 if (stopwatch.Elapsed >= TimeSpan.FromMinutes(8))
                     _logger.LogErrorMessage(
-                        $"Historic Daily PriceRetriever taking too long. Total time: {stopwatch.Elapsed.Minutes} minutes," +
+                        "Historic Daily PriceRetriever taking too long. Total time: " +
+                        $"{stopwatch.Elapsed.Minutes} minutes," +
                         $" {stopwatch.Elapsed.Seconds} seconds.");
-
-                stopwatch.Stop();
-                _logger.LogInformation($"------------------ Batch complete in {stopwatch.Elapsed.Minutes} minutes," +
-                                       $" {stopwatch.Elapsed.Seconds} seconds -----------------------");
+                else
+                    _logger.LogInformation($"Batch complete in {stopwatch.Elapsed.Minutes} minutes," +
+                                           $" {stopwatch.Elapsed.Seconds} seconds");
             }
         }
 

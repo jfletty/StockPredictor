@@ -52,7 +52,7 @@ namespace StockPredictor.DataRetriever.Services.Services
             return new List<KeyValuePair<string, Exception>>(result);
         }
         
-        private void CheckAndUpdateAsync(Stock source, Stock target)
+        private static void CheckAndUpdateAsync(Stock source, Stock target)
         {
             if (target.Equals(source)) return;
             source.Update(target);

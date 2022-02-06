@@ -15,11 +15,7 @@ namespace StockPredictor.DataRetriever.Services.ApplicationServices
 
         private readonly Dictionary<TNaturalKey, TEntity> dictionaryByNaturalKey =
             new Dictionary<TNaturalKey, TEntity>();
-
-        private readonly Dictionary<TKey, TEntity> dictionaryByKey = new Dictionary<TKey, TEntity>();
-
-        private List<TEntity> NewEntities { get; } = new List<TEntity>();
-
+        
         public Map(Func<TEntity, TNaturalKey> naturalKeySelector, Func<TEntity, TKey> keySelector)
         {
             keyTransform = x => x;
@@ -32,7 +28,6 @@ namespace StockPredictor.DataRetriever.Services.ApplicationServices
             foreach (var entity in await query.AsNoTracking().ToListAsync())
             {
                 dictionaryByNaturalKey[keyTransform(naturalKeySelector(entity))] = entity;
-                dictionaryByKey[keySelector(entity)] = entity;
             }
         }
 
@@ -47,9 +42,7 @@ namespace StockPredictor.DataRetriever.Services.ApplicationServices
                 return keySelector(entity);
 
             entity = await create();
-            NewEntities.Add(entity);
             dictionaryByNaturalKey[keyTransform(naturalKey)] = entity;
-            dictionaryByKey[keySelector(entity)] = entity;
             return keySelector(entity);
         }
     }

@@ -48,16 +48,18 @@ namespace StockPredictor.DataRetriever.Services.ApiIntegrators
                 var symbolsForPricesToRefresh = await _refreshesService.IsRefreshRequiredAsync(JobType.DailyPrice);
                 if (!symbolsForPricesToRefresh.Any()) return;
 
-                _logger.LogInformation($"------------------ Beginning to refresh {symbolsForPricesToRefresh.Count} Daily Prices -----------------------");
+                _logger.LogInformation($"Beginning to refresh {symbolsForPricesToRefresh.Count} Daily Prices");
 
                 await RefreshPricesAsync(symbolsForPricesToRefresh);
-
-                if (stopwatch.Elapsed >= TimeSpan.FromMinutes(15))
-                    _logger.LogErrorMessage($"Daily PriceRetriever taking too long. Total time: {stopwatch.Elapsed.Minutes} minutes," +
-                                            $" {stopwatch.Elapsed.Seconds} seconds.");
                 stopwatch.Stop();
-                _logger.LogInformation($"------------------ Batch complete in {stopwatch.Elapsed.Minutes} minutes," +
-                                       $" {stopwatch.Elapsed.Seconds} seconds -----------------------");
+                
+                if (stopwatch.Elapsed >= TimeSpan.FromMinutes(15))
+                    _logger.LogErrorMessage("Daily PriceRetriever taking too long. Total time: " +
+                                            $"{stopwatch.Elapsed.Minutes} minutes," +
+                                            $" {stopwatch.Elapsed.Seconds} seconds.");
+                else
+                    _logger.LogInformation($"Batch complete in {stopwatch.Elapsed.Minutes} minutes," +
+                                       $" {stopwatch.Elapsed.Seconds} seconds");
             }
         }
 
@@ -72,7 +74,10 @@ namespace StockPredictor.DataRetriever.Services.ApiIntegrators
             var tasks = symbolsToRefresh.Select(async symbol =>
             {
                 var temp = await _restClient.GetAsync<ApiStock>(RemainingUri, symbol, parameters);
-                if (temp.HasError || temp.SuccessResult.QuoteSummary == null || !string.IsNullOrEmpty(temp.SuccessResult.QuoteSummary.Error?.Description) || temp.SuccessResult.QuoteSummary.Result.First().Price == null
+                if (temp.HasError ||
+                    temp.SuccessResult.QuoteSummary == null ||
+                    !string.IsNullOrEmpty(temp.SuccessResult.QuoteSummary.Error?.Description) ||
+                    temp.SuccessResult.QuoteSummary.Result.First().Price == null
                 )
                 {
                     Exception error;
@@ -93,7 +98,8 @@ namespace StockPredictor.DataRetriever.Services.ApiIntegrators
                 }
                 else
                 {
-                    successfulResponses.Add(new KeyValuePair<string, List<ApiStockResult>>(symbol, temp.SuccessResult.QuoteSummary.Result));
+                    successfulResponses.Add(
+                        new KeyValuePair<string, List<ApiStockResult>>(symbol, temp.SuccessResult.QuoteSummary.Result));
                 }
             });
             await Task.WhenAll(tasks);
@@ -105,12 +111,13 @@ namespace StockPredictor.DataRetriever.Services.ApiIntegrators
             var emptyResponses = successfulResponses.Where(x => x.Value.Count == 0).Select(x => x.Key).ToList();
             if (emptyResponses.Any())
             {
-                await _refreshesService.UpdateRefreshAsync(JobType.DailyPrice, successfulResponses.Where(x => x.Value.Count == 0).Select(x => x.Key));
+                await _refreshesService.UpdateRefreshAsync(
+                    JobType.DailyPrice, 
+                    successfulResponses.Where(x => x.Value.Count == 0).Select(x => x.Key));
             }
 
             var convertedStock = await _dataWarehousePipeline.TransformFactAndDimensions<DailyPriceRecap>(successfulResponses);
-
-
+            
             if (!convertedStock.Any()) return;
             var (failed, passed) = await _dailyPriceService.DeleteAndInsertAsync(convertedStock);
 
@@ -119,4 +126,3 @@ namespace StockPredictor.DataRetriever.Services.ApiIntegrators
         }
     }
 }
-

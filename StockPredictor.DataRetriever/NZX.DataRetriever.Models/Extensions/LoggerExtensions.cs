@@ -7,7 +7,7 @@ namespace StockPredictor.DataRetriever.Domain.Extensions
     {
         public static void LogErrorMessage(this ILogger logger, string message, params object[] args)
         {
-            var client = new RestClient("a");
+            var client = new RestClient("");
             var request = new RestRequest(Method.POST);
             request.AddHeader("Content-type", "application/json");
             request.AddParameter("application/json", $"{{\"text\":\"{message}!\"}}", ParameterType.RequestBody);

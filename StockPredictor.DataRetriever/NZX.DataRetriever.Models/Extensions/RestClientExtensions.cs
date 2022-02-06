@@ -16,7 +16,11 @@ namespace StockPredictor.DataRetriever.Domain.Extensions
             _restConfiguration = restConfiguration;
         }
 
-        public async Task<Result<T>> GetAsync<T>(string remainingUri, string endpoint, Dictionary<string, string> parameters = null, List<KeyValuePair<string, string>> headers = null)
+        public async Task<Result<T>> GetAsync<T>(
+            string remainingUri, 
+            string endpoint, 
+            Dictionary<string, string> parameters = null, 
+            List<KeyValuePair<string, string>> headers = null)
         {
             Result<T> result = null;
             try
