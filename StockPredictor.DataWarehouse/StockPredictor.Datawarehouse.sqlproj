@@ -1,0 +1,108 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <Name>NZX.DataRetriever.Database</Name>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectVersion>4.1</ProjectVersion>
+    <ProjectGuid>{b92717cc-c19b-495b-96aa-cabeaa290574}</ProjectGuid>
+    <DSP>Microsoft.Data.Tools.Schema.Sql.Sql130DatabaseSchemaProvider</DSP>
+    <OutputType>Database</OutputType>
+    <RootPath>
+    </RootPath>
+    <RootNamespace>Database</RootNamespace>
+    <AssemblyName>Database</AssemblyName>
+    <ModelCollation>1033, CI</ModelCollation>
+    <DefaultFileStructure>BySchemaAndSchemaType</DefaultFileStructure>
+    <DeployToDatabase>True</DeployToDatabase>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetLanguage>CS</TargetLanguage>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <SqlServerVerification>False</SqlServerVerification>
+    <IncludeCompositeObjects>True</IncludeCompositeObjects>
+    <TargetDatabaseSet>True</TargetDatabaseSet>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <OutputPath>bin\Release\</OutputPath>
+    <BuildScriptName>$(MSBuildProjectName).sql</BuildScriptName>
+    <TreatWarningsAsErrors>False</TreatWarningsAsErrors>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <DefineDebug>false</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <OutputPath>bin\Debug\</OutputPath>
+    <BuildScriptName>$(MSBuildProjectName).sql</BuildScriptName>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">11.0</VisualStudioVersion>
+    <!-- Default to the v11.0 targets path if the targets file for the current VS version is not found -->
+    <SSDTExists Condition="Exists('$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v$(VisualStudioVersion)\SSDT\Microsoft.Data.Tools.Schema.SqlTasks.targets')">True</SSDTExists>
+    <VisualStudioVersion Condition="'$(SSDTExists)' == ''">11.0</VisualStudioVersion>
+  </PropertyGroup>
+  <Import Condition="'$(SQLDBExtensionsRefPath)' != ''" Project="$(SQLDBExtensionsRefPath)\Microsoft.Data.Tools.Schema.SqlTasks.targets" />
+  <Import Condition="'$(SQLDBExtensionsRefPath)' == ''" Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v$(VisualStudioVersion)\SSDT\Microsoft.Data.Tools.Schema.SqlTasks.targets" />
+  <ItemGroup>
+    <Folder Include="Properties" />
+    <Folder Include="Tables" />
+    <Folder Include="Tables\Dim" />
+    <Folder Include="Tables\Fact" />
+    <Folder Include="Procedures" />
+    <Folder Include="Procedures\Dim_Date" />
+    <Folder Include="Views" />
+    <Folder Include="Procedures\Dim_Centiment" />
+    <Folder Include="Procedures\Projections" />
+    <Folder Include="Tables\Stage" />
+    <Folder Include="Procedures\Refresh" />
+  </ItemGroup>
+  <ItemGroup>
+    <Build Include="Tables\Dim\Date.sql" />
+    <Build Include="Procedures\Dim_Date\Populate_Dim_Date.sql" />
+    <Build Include="Procedures\Dim_Date\Populate_Dim_Date_Year.sql" />
+    <Build Include="Procedures\Dim_Date\Populate_Dim_TimeOfDay.sql" />
+    <Build Include="Tables\Dim\TimeOfDay.sql" />
+    <Build Include="Tables\Fact\StockPrice.sql" />
+    <Build Include="Tables\Dim\Investor.sql" />
+    <Build Include="Tables\Fact\StockAnnouncement.sql" />
+    <Build Include="Tables\Dim\Sentiment.sql" />
+    <Build Include="Procedures\Dim_Centiment\Populate_Dim_Centiment.sql" />
+    <Build Include="Tables\Fact\Prediction.sql" />
+    <Build Include="Tables\Dim\Director.sql" />
+    <Build Include="Tables\Dim\AnnouncementType.sql" />
+    <Build Include="Tables\Dim\Stock.sql" />
+    <Build Include="Procedures\Projections\GetProjectionsInput.sql" />
+    <Build Include="Tables\Stage\Refresh.sql" />
+    <Build Include="Tables\Stage\ProjectionSetting.sql" />
+    <Build Include="Procedures\Projections\GetStocksRequiringProjections.sql" />
+    <Build Include="Procedures\Projections\GetStocksRequiringModels.sql" />
+    <Build Include="Tables\Stage\Exchange.sql" />
+    <Build Include="Tables\Stage\Symbol.sql" />
+    <Build Include="Procedures\Refresh\GetStocksRequiringRefresh.sql" />
+    <Build Include="Procedures\Refresh\GetExchangesRequiringRefresh.sql" />
+    <Build Include="Procedures\Refresh\GetStocksRequiringPriceRefresh.sql" />
+    <Build Include="Tables\Fact\DailyPriceRecap.sql" />
+    <Build Include="Tables\Fact\StockKeyDetails.sql" />
+    <Build Include="Procedures\Refresh\GetStocksRequiringDailyRecapRefresh.sql" />
+    <Build Include="Procedures\Refresh\GetStocksRequiringHistoricRefresh.sql" />
+    <Build Include="Tables\Fact\DailyPrediction.sql" />
+    <Build Include="Procedures\Projections\GetStocksRequiringDailyProjection.sql" />
+    <Build Include="Procedures\Projections\GetDailyModelInput.sql" />
+    <Build Include="Views\DailyActualVsPredictedView.sql" />
+    <Build Include="Views\DailyPriceRecapView.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Deploy\Schema.sql" />
+  </ItemGroup>
+</Project>

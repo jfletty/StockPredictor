@@ -1,0 +1,55 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30002.166
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StockPredictor.DataRetriever.Services", "NZX.DataRetriever.Services\StockPredictor.DataRetriever.Services.csproj", "{DAB85AC2-6A5A-479C-8FED-00594DD7DE1D}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StockPredictor.DataRetriever.Domain", "NZX.DataRetriever.Models\StockPredictor.DataRetriever.Domain.csproj", "{3078827C-F688-4C1C-AEAA-CF2DEED5F66A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Workers", "Workers", "{CA2E3E52-32D6-4B16-99BF-9797EE253E17}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StockPredictor.DataRetriever.Console", "StockPredictor.DataRetriever.Console\StockPredictor.DataRetriever.Console.csproj", "{9494ED98-CFA5-48E8-B2A5-73A48629B226}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Debug|x86 = Debug|x86
+		Release|Any CPU = Release|Any CPU
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{DAB85AC2-6A5A-479C-8FED-00594DD7DE1D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DAB85AC2-6A5A-479C-8FED-00594DD7DE1D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DAB85AC2-6A5A-479C-8FED-00594DD7DE1D}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{DAB85AC2-6A5A-479C-8FED-00594DD7DE1D}.Debug|x86.Build.0 = Debug|Any CPU
+		{DAB85AC2-6A5A-479C-8FED-00594DD7DE1D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DAB85AC2-6A5A-479C-8FED-00594DD7DE1D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DAB85AC2-6A5A-479C-8FED-00594DD7DE1D}.Release|x86.ActiveCfg = Release|Any CPU
+		{DAB85AC2-6A5A-479C-8FED-00594DD7DE1D}.Release|x86.Build.0 = Release|Any CPU
+		{3078827C-F688-4C1C-AEAA-CF2DEED5F66A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3078827C-F688-4C1C-AEAA-CF2DEED5F66A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3078827C-F688-4C1C-AEAA-CF2DEED5F66A}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{3078827C-F688-4C1C-AEAA-CF2DEED5F66A}.Debug|x86.Build.0 = Debug|Any CPU
+		{3078827C-F688-4C1C-AEAA-CF2DEED5F66A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3078827C-F688-4C1C-AEAA-CF2DEED5F66A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3078827C-F688-4C1C-AEAA-CF2DEED5F66A}.Release|x86.ActiveCfg = Release|Any CPU
+		{3078827C-F688-4C1C-AEAA-CF2DEED5F66A}.Release|x86.Build.0 = Release|Any CPU
+		{9494ED98-CFA5-48E8-B2A5-73A48629B226}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9494ED98-CFA5-48E8-B2A5-73A48629B226}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9494ED98-CFA5-48E8-B2A5-73A48629B226}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{9494ED98-CFA5-48E8-B2A5-73A48629B226}.Debug|x86.Build.0 = Debug|Any CPU
+		{9494ED98-CFA5-48E8-B2A5-73A48629B226}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9494ED98-CFA5-48E8-B2A5-73A48629B226}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9494ED98-CFA5-48E8-B2A5-73A48629B226}.Release|x86.ActiveCfg = Release|Any CPU
+		{9494ED98-CFA5-48E8-B2A5-73A48629B226}.Release|x86.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {A35249CF-85D4-4A10-856D-38376D9F76BB}
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,26 @@
+FROM mcr.microsoft.com/dotnet/core/runtime:3.1.1 AS base
+WORKDIR /app
+
+FROM mcr.microsoft.com/dotnet/core/sdk:3.1.101 AS build
+WORKDIR /project
+ARG version
+
+COPY ["./StockPredictor.DataRetriever.sln", "."]
+COPY ["./StockPredictor.DataRetriever.Console/.", "StockPredictor.DataRetriever.Console/"]
+
+COPY ["./StockPredictor.DataRetriever.Domain/.", "StockPredictor.DataRetriever.Domain/"]
+COPY ["./StockPredictor.DataRetriever.Services/.", "StockPredictor.DataRetriever.Services/"]
+
+RUN dotnet restore
+RUN dotnet build -c Release
+
+LABEL org.opencontainers.image.source https://github.com/jfletty/StockPredictor.DataRetriever
+
+FROM build AS publish
+RUN dotnet publish "StockPredictor.DataRetriever.Console/StockPredictor.DataRetriever.Console.csproj" -c Release -o /app/publish
+
+FROM publish AS final
+WORKDIR /app
+COPY --from=publish /app/publish .
+
+ENTRYPOINT ["dotnet", "StockPredictor.DataRetriever.Console.dll"]

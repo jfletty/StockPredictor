@@ -1,0 +1,39 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30002.166
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StockPredictor.Algorithm.Services", "StockPredictor.Algorithm.Services\StockPredictor.Algorithm.Services.csproj", "{29070ECD-6FA0-448A-B793-96C71C6D498B}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StockPredictor.Algorithm.Domain", "StockPredictor.Algorithm.Domain\StockPredictor.Algorithm.Domain.csproj", "{F29DF7B1-4016-4294-9535-1B7054318C37}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StockPredictor.Algorithm.Console", "StockPredictor.Algorithm.Console\StockPredictor.Algorithm.Console.csproj", "{5C6E5891-AB5F-4660-A923-BDF1668C8142}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{29070ECD-6FA0-448A-B793-96C71C6D498B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{29070ECD-6FA0-448A-B793-96C71C6D498B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{29070ECD-6FA0-448A-B793-96C71C6D498B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{29070ECD-6FA0-448A-B793-96C71C6D498B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F29DF7B1-4016-4294-9535-1B7054318C37}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F29DF7B1-4016-4294-9535-1B7054318C37}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F29DF7B1-4016-4294-9535-1B7054318C37}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F29DF7B1-4016-4294-9535-1B7054318C37}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5C6E5891-AB5F-4660-A923-BDF1668C8142}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5C6E5891-AB5F-4660-A923-BDF1668C8142}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5C6E5891-AB5F-4660-A923-BDF1668C8142}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5C6E5891-AB5F-4660-A923-BDF1668C8142}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {7E334396-E6A5-4B7E-9396-9B15481A1AD7}
+	EndGlobalSection
+EndGlobal

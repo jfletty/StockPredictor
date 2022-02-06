@@ -1,0 +1,36 @@
+FROM alpine:3.7
+ENV http_proxy http://proxy-chain.xxx.com:911/
+ENV https_proxy http://proxy-chain.xxx.com:912/
+
+FROM mcr.microsoft.com/dotnet/core/runtime:3.1.1 AS base
+WORKDIR /app
+
+FROM mcr.microsoft.com/dotnet/core/sdk:3.1.101 AS build
+WORKDIR /project
+ARG version
+
+COPY ["StockPredictor.Algorithm.sln", "."]
+COPY ["StockPredictor.Algorithm.Console/.", "StockPredictor.Algorithm.Console/"]
+COPY ["StockPredictor.Algorithm.Models/.", "StockPredictor.Algorithm.Models/"]
+COPY ["StockPredictor.Algorithm.Services/.", "StockPredictor.Algorithm.Services/"]
+
+LABEL org.opencontainers.image.source https://github.com/jfletty/StockPredictor.Algorithm
+
+RUN dotnet restore
+RUN dotnet build -c Release
+
+FROM build AS publish
+RUN dotnet publish "StockPredictor.Algorithm.Console/StockPredictor.Algorithm.Console.csproj" -c Release -o /app/publish
+
+FROM publish AS final
+WORKDIR /app
+
+RUN apt-get update
+RUN apt-get install -y python3-sklearn python3-sklearn-lib python3-pandas python3-boto3
+
+
+EXPOSE 80
+
+COPY --from=publish /app/publish .
+
+ENTRYPOINT ["dotnet", "StockPredictor.Algorithm.Console.dll"]
